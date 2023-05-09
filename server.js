@@ -14,7 +14,11 @@ app.use(cors())
 
 const PORT = process.env.PORT;
 
+// the general struct is domain name/url followed by the route
+// http://localhost:3001-domainName
+//  / = endpoint/path
 app.get('/', (request, response) => {
+  console.log(request.query);
   response.status(200).send('Hey your default route is working')
 });
 
@@ -23,6 +27,7 @@ app.get('/weather', (request, response, next) => {
   try {
     console.log(request.query);
     // const { lat, lon, searchQuery } = request.query
+    const searchQuery = request.query.searchQuery
     const selectCity = weatherData.find((city)=> city.city_name === searchQuery)
     const formattedData = selectCity.data.map(day => new Forecast(day))
     response.status(200).send(formattedData);

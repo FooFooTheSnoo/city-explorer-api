@@ -25,10 +25,16 @@ app.get('/', (request, response) => {
 // NEXT param is for catch block
 app.get('/weather', (request, response, next) => {
   try {
-    console.log(request.query);
-    // const { lat, lon, searchQuery } = request.query
-    const searchQuery = request.query.searchQuery
+    const { lat, lon, searchQuery } = request.query
+    console.log(lat, lon, searchQuery);
+    // const searchQuery = request.query.searchQuery
     const selectCity = weatherData.find((city)=> city.city_name === searchQuery)
+    if (weatherData === undefined) {
+      response.status(404).send('Not found');
+    } else {
+      let formattedData = selectCity.data.map(day => new Forecast(day))
+      response.status(200).send(formattedData);
+    }
     const formattedData = selectCity.data.map(day => new Forecast(day))
     response.status(200).send(formattedData);
   }

@@ -16,8 +16,8 @@ class Forecast {
   constructor(obj) {
     this.date = obj.datetime
     this.description = obj.weather.description
-    this.temp = obj.temp
-    this.appTemp = obj.app_temp
+    this.max_temp = obj.max_temp
+    this.low_temp = obj.low_temp
   }
 }
 
